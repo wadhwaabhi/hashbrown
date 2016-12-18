@@ -2,9 +2,41 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var Post = require('./models/post')
 var User = require('./models/user')
+var morgan = require('morgan');
+var jwt = require('jsonwebtoken');
+var config = require('./config');
 
 var app = express()
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
+app.set('superSecret', config.secret);
+app.use(morgan('dev'));
+
+app.post('/login', function(req, res){
+	User.findOne({
+		name: req.body.name
+	}, function(err, user){
+		if(err) throw err;
+
+		if (!user) {
+      		res.json({ success: false, message: 'Authentication failed. User not found.' });
+    	} else if (user) {
+			if (user.password != req.body.password) {
+				res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+			} else{
+				var token = jwt.sign(user, app.get('superSecret'), {
+          		expiresIn: 60*60*24 // expires in 24 hours
+        	});
+			res.json({
+				success:true,
+				message:'Login Successful',
+				token: token
+			});
+		}
+	}
+	});
+});
+
 
 app.get('/api/posts', function (req, res, next) {
   Post.find(function(err, posts) {
