@@ -1,0 +1,52 @@
+{
+	"user": {
+		"id": "rhgfadsjg22656kuh",
+		"name": "Mr Robot",
+		"follower": [{
+			"id": "jhagdgkj12",
+			"name": "Cool Dude"
+		}, {
+			"id": "gjaghgjag662",
+			"name": "Paranoi Android"
+		}, {
+			"id": "jdkfhgdsj2321",
+			"name": "Cluster Buster"
+		}],
+		"following": [{
+			"id": "kdgsfgdsk213",
+			"name": "Lazy XXX"
+		}, {
+			"id": "kuhgdsfgk2873",
+			"name": "Black Swan"
+		}],
+		"posts": [{
+			"id": "1",
+			"time": "15,Dec 2016-7:30",
+			"img": "url1",
+			"comments": [{
+				"uid": "kjskjfkdh1223",
+				"name": "Mr Crowley",
+				"com": "woah! sexy",
+				"time": "15,Dec 2016-7:31"
+			}, {
+				"uid": "kjskjfkdh1223",
+				"name": "harley quinn",
+				"com": "Badass chic!",
+				"time": "15,Dec 2016-8:45"
+			}]
+		}, {
+			"id": "2",
+			"time": "18,Dec 2016-1:20",
+			"img": "url2",
+			"comments": []
+		}, {
+			"id": "3",
+			"time": "18,Dec 2016-16:20",
+			"img": "url3",
+			"comments": []
+		}],
+		"email": "mrrobot@jarvis.com",
+		"phone": 556241799,
+		"gender": "Male"
+	}
+}
