@@ -1,0 +1,24 @@
+.form-container {
+	height: 100px;
+	max-height: 100px;
+	width: 400px;
+	max-width: 400px;
+	box-shadow: 2px 2px 5px 5px #C9C9C9;
+	float: none;
+	position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+}
+
+.container {
+	height: 80%;
+}
+
+.footer-div {
+	height: 19%;
+	position: absolute;
+	bottom: 0px;
+}
