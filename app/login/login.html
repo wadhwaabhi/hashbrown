@@ -1,11 +1,22 @@
 <div ng-controller="LoginController">
-	<div class="container">	
-		<div class="form-container vcenter center-block col-lg-3 col-md-4">
-			<form class="login-form">
-				Username: <input type="text" ng-model="user.name" placeholder="Enter Username" required />
-				Password: <input type="password" ng-model="user.password" placeholder="Enter Password" required />
-				<button class="btn" ng-click="login()">Submit</button>
-			</form>	
+	<div class="content">	
+		<div class="form-container col-lg-3 col-md-4">
+			<div class="form-header">
+				<h4>Login</h4>
+			</div>
+			<div class="form-content">
+				<form class="login-form">				
+					<div class="username-div">
+						<input type="text" ng-model="user.name" placeholder="Enter Username/Email-ID" required />		
+					</div>
+					<div class="password-div">
+						<input type="password" ng-model="user.password" placeholder="Password" required />		
+					</div>
+					<div class="submit-div">
+						<button class="btn" ng-click="login()">Submit</button>
+					</div>
+				</form>
+			</div>	
 		</div>
 	</div>
 
