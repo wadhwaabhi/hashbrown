@@ -5,6 +5,9 @@ var User = require('./models/user')
 var morgan = require('morgan');
 var jwt = require('jsonwebtoken');
 var config = require('./config');
+var _ = require('underscore');
+
+
 
 var app = express()
 // var allowCrossDomain = function(req, res, next) {
@@ -149,8 +152,15 @@ function getFeed(following, callback){
 			return next(err);
 		}
 		posts.forEach(function(item){
-			array.push(item.name);
+			//array.push(item.posts);
+			var name = item.name;
+			item.posts.forEach(function(post){
+				if(post){
+					array.push({name:name, post: post})
+			}
+			});
 		});
+		_.sortBy(array, function(o) { return new Date(o.post.date); })
 		callback(array);
 	});
 }
