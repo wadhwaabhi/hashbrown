@@ -5,15 +5,15 @@
 				<h4>Login</h4>
 			</div>
 			<div class="form-content">
-				<form class="login-form">				
+				<form class="login-form" ng-submit="login()">				
 					<div class="username-div">
-						<input type="text" ng-model="user.name" placeholder="Enter Username/Email-ID" required />		
+						<input type="text" ng-model="user.name" placeholder="Username/Emai ID" required />		
 					</div>
 					<div class="password-div">
 						<input type="password" ng-model="user.password" placeholder="Password" required />		
 					</div>
 					<div class="submit-div">
-						<button class="btn" ng-click="login()">Submit</button>
+						<button type="submit" class="btn">Log me in!</button>
 					</div>
 				</form>
 			</div>	

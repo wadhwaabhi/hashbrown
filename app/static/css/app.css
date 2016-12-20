@@ -28,6 +28,7 @@
 .form-content input {
 	border: 0;
 	border-bottom: 1px solid gray;
+	padding-left: 5px;
 }
 
 .form-content input:focus {
@@ -45,6 +46,10 @@
 
 .submit-div {
 	margin-top: 30px;
+}
+
+.submit-div button:hover {
+	opacity: 0.7;
 }
 
 .content {
