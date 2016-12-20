@@ -28,7 +28,8 @@
 .form-content input {
 	border: 0;
 	border-bottom: 1px solid gray;
-	padding-left: 5px;
+	padding: 5px;
+	font-size: smaller;
 }
 
 .form-content input:focus {
@@ -48,20 +49,26 @@
 	margin-top: 30px;
 }
 
+.submit-div button {
+	background-color: #fafafa;
+	color: #1C7297;
+	box-shadow: 1px 1px 1px 1px #C9C9C9;
+}
+
 .submit-div button:hover {
 	opacity: 0.7;
 }
 
 .content {
-	height: 70%;
+	height: 600px;
 	width: 100%;
 	position: absolute;
-	top: 10%;
+	top: 50px;
 
 }
 
 header {
-	height: 10%;
+	height: 50px;
 	width: 100%;
 	position: absolute;
 	top: 0px;
@@ -70,7 +77,7 @@ header {
 }
 
 footer {
-	height: 20%;
+	height: 50px;
 	width: 100%;
 	position: absolute;
 	bottom: 0px;
