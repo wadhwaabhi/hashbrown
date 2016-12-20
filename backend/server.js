@@ -7,19 +7,34 @@ var jwt = require('jsonwebtoken');
 var config = require('./config');
 
 var app = express()
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+// var allowCrossDomain = function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, authorization');
 
-    next();
-}
-app.use(allowCrossDomain);
+//     next();
+// }
+// app.use(allowCrossDomain);
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.set('superSecret', config.secret);
 app.use(morgan('dev'));
+
+
+app.all('/*', function(req, res, next) {
+  // CORS headers
+  res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  // Set custom headers for CORS
+  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key, Authorization');
+  if (req.method == 'OPTIONS') {
+    res.status(200).end();
+  } else {
+    next();
+  }
+});
 
 app.post('/login', function(req, res){
 	console.log("request: ", req.body);
@@ -28,9 +43,9 @@ app.post('/login', function(req, res){
 	}, function(err, user){
 		if(err) throw err;
 
-		res.setHeader('Access-Control-Allow-Origin', '*');
-		res.setHeader('Access-Control-Allow-Methods', 'POST')
-		res.setHeader('Access-Control-Allow-Methods', 'POST')
+		// res.setHeader('Access-Control-Allow-Origin', '*');
+		// res.setHeader('Access-Control-Allow-Methods', 'POST')
+		// res.setHeader('Access-Control-Allow-Methods', 'POST')
 		if (!user) {
       		res.json({ success: false, message: 'Authentication failed. User not found.' });
     	} else if (user) {
@@ -43,7 +58,8 @@ app.post('/login', function(req, res){
 			res.json({
 				success:true,
 				message:'Login Successful',
-				token: token
+				token: token,
+				userid: user._id
 			});
 		}
 	}
@@ -82,8 +98,13 @@ app.get('/api/posts', function (req, res, next) {
 })
 
 app.get('/api/users', function (req, res, next) {
-  User.find(function(err, users) {
-    if (err) { return next(err) }
+  var userid = req.param('userid'); 
+  console.log("User ID", userid);
+  User.find({_id: userid}, function(err, users) {
+    if (err) {
+    	console.log("No user", err);
+     	return next(err) 
+ 	}
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.json(users)
   })
@@ -100,14 +121,14 @@ app.post('/api/posts', function (req, res, next) {
   })
 })
 
-app.post('/api/users', function (req, res, next) {
+app.post('/register/users', function (req, res, next) {
   var user = new User({
     name: 	req.body.name,
   	email: 	req.body.email,
   	phone: 	req.body.phone,
   	gender: req.body.gender,
-  	follower: [],
-  	following: [],
+  	follower: req.body.follower,
+  	following: req.body.following,
   	password: req.body.password
   })
   user.save(function (err, user) {

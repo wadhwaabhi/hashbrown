@@ -4,8 +4,8 @@ var User = db.model('User', {
   email: 	{ type: String, required: true },
   phone: 	{ type: Number, required: true },
   gender:   { type: String, required: true },
-  follower: { type: Array, required: false},
-  following: {type: Array, required: false},
+  follower: [{type: String}],
+  following: [{type: String}],
   password: {type:String, required:true},
   date:     { type: Date, required: true, default: Date.now }
 })
