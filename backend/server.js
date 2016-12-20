@@ -110,16 +110,6 @@ app.get('/api/users', function (req, res, next) {
   })
 })
 
-app.post('/api/posts', function (req, res, next) {
-  var post = new Post({
-    username: req.body.username,
-    body: req.body.body
-  })
-  post.save(function (err, post) {
-    if (err) { return next(err) }
-    res.json(201, post)
-  })
-})
 
 app.post('/register/users', function (req, res, next) {
   var user = new User({
@@ -151,29 +141,28 @@ function getFollowing(userid, callback){
 
 function getFeed(following, callback){
 	var array = [];
-	following.forEach(function(item){
-		console.log("Item", item);
-		User.findOne({id: item}, function(err, post, callback){
-			if(err){
-				console.log("No posts");
-			}
-			callback(post);
+	User.find({_id: {$in: following}}, function(err, posts){
+		if(err){
+			console.log("No posts", err);
+			return next(err);
+		}
+		posts.forEach(function(item){
+			array.push(item.name);
 		});
-
+		callback(array);
 	});
-	callback(array);
 }
 
 app.get('/api/feed', function (req, res, next) {
   var userid = req.param('userid'); 
   console.log("User ID", userid);
   getFollowing(userid, function(result){
-  	res.json({following: result});
-  	// getFeed(result, function(posts){
-  	// 	res.json(posts);
-  	// 	console.log("Post",posts);
-  	// });
-  	//console.log(result);
+  	//res.json({following: result});
+  	getFeed(result, function(posts){
+  		res.json(posts);
+  		console.log("Post",posts);
+  	});
+  	console.log(result);
   });
   var array = []
 })
