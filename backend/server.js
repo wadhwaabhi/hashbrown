@@ -88,7 +88,7 @@ apiRoutes.use(function(req, res, next){
 	}
 });
 
-app.use('/api', apiRoutes);
+//app.use('/api', apiRoutes);
 
 app.get('/api/posts', function (req, res, next) {
   Post.find(function(err, posts) {
@@ -135,6 +135,47 @@ app.post('/register/users', function (req, res, next) {
     if (err) { return next(err) }
     res.json(201, user)
   })
+})
+
+function getFollowing(userid, callback){
+	User.findOne({_id: userid}, function(err, users) {
+    if (err) {
+    	console.log("No followers", err);
+     	return next(err) 
+ 	}
+    //res.json({following: users.following});
+    callback(users.following)
+
+  })
+}
+
+function getFeed(following, callback){
+	var array = [];
+	following.forEach(function(item){
+		console.log("Item", item);
+		User.findOne({id: item}, function(err, post, callback){
+			if(err){
+				console.log("No posts");
+			}
+			callback(post);
+		});
+
+	});
+	callback(array);
+}
+
+app.get('/api/feed', function (req, res, next) {
+  var userid = req.param('userid'); 
+  console.log("User ID", userid);
+  getFollowing(userid, function(result){
+  	res.json({following: result});
+  	// getFeed(result, function(posts){
+  	// 	res.json(posts);
+  	// 	console.log("Post",posts);
+  	// });
+  	//console.log(result);
+  });
+  var array = []
 })
 
 app.listen(3000, '0.0.0.0', function () {
