@@ -119,6 +119,8 @@ app.post('/register/users', function (req, res, next) {
   	gender: req.body.gender,
   	follower: req.body.follower,
   	following: req.body.following,
+  	posts: req.body.posts,
+  	likes: req.body.likes,
   	password: req.body.password
   })
   user.save(function (err, user) {
