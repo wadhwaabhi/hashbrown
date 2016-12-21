@@ -5,9 +5,9 @@ var User = require('./models/user')
 var morgan = require('morgan');
 var jwt = require('jsonwebtoken');
 var config = require('./config');
-var _ = require('underscore');
 
 var loginController = require('./controllers/logincontroller');
+var userController = require('./controllers/usercontroller');
 
 var app = express()
 // var allowCrossDomain = function(req, res, next) {
@@ -40,7 +40,7 @@ app.all('/*', function(req, res, next) {
 });
 
 app.post('/login', loginController.login);
-app.post('/register/users', loginController.register);
+app.post('/register', loginController.register);
 
 var apiRoutes = express.Router(); 
 apiRoutes.use(function(req, res, next){
@@ -66,71 +66,14 @@ apiRoutes.use(function(req, res, next){
 
 //app.use('/api', apiRoutes);
 
+app.get('/api/users', userController.users);
+app.get('/api/feed', userController.feed);
+
 app.get('/api/posts', function (req, res, next) {
   Post.find(function(err, posts) {
     if (err) { return next(err) }
     res.json(posts)
   })
-})
-
-app.get('/api/users', function (req, res, next) {
-  var userid = req.param('userid'); 
-  console.log("User ID", userid);
-  User.find({_id: userid}, function(err, users) {
-    if (err) {
-    	console.log("No user", err);
-     	return next(err) 
- 	}
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.json(users)
-  })
-})
-
-function getFollowing(userid, callback){
-	User.findOne({_id: userid}, function(err, users) {
-    if (err) {
-    	console.log("No followers", err);
-     	return next(err) 
- 	}
-    //res.json({following: users.following});
-    callback(users.following)
-
-  })
-}
-
-function getFeed(following, callback){
-	var array = [];
-	User.find({_id: {$in: following}}, function(err, posts){
-		if(err){
-			console.log("No posts", err);
-			return next(err);
-		}
-		posts.forEach(function(item){
-			//array.push(item.posts);
-			var name = item.name;
-			item.posts.forEach(function(post){
-				if(post){
-					array.push({name:name, post: post})
-			}
-			});
-		});
-		_.sortBy(array, function(o) { return new Date(o.post.date); })
-		callback(array);
-	});
-}
-
-app.get('/api/feed', function (req, res, next) {
-  var userid = req.param('userid'); 
-  console.log("User ID", userid);
-  getFollowing(userid, function(result){
-  	//res.json({following: result});
-  	getFeed(result, function(posts){
-  		res.json(posts);
-  		console.log("Post",posts);
-  	});
-  	console.log(result);
-  });
-  var array = []
 })
 
 app.listen(3000, '0.0.0.0', function () {
