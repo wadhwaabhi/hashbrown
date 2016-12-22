@@ -66,15 +66,12 @@ apiRoutes.use(function(req, res, next){
 
 //app.use('/api', apiRoutes);
 
-app.get('/api/users', userController.users);
-app.get('/api/feed', userController.feed);
+app.get('/api/user/info', userController.users);
+app.get('/api/user/feed', userController.feed);
+app.get('/api/user/posts', userController.getposts);
+app.get('/api/user/post', userController.getposts);
+app.post('/api/user/follow', userController.follow);
 
-app.get('/api/posts', function (req, res, next) {
-  Post.find(function(err, posts) {
-    if (err) { return next(err) }
-    res.json(posts)
-  })
-})
 
 app.listen(3000, '0.0.0.0', function () {
   console.log('Server listening on', 3000)

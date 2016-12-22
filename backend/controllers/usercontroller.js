@@ -60,3 +60,40 @@ module.exports.feed = function (req, res, next) {
   });
   var array = []
 }
+
+module.exports.follow = function(req, res, next){
+	var userid = req.param('userid');
+	var fllw = req.body.userid;
+	console.log(userid, fllw);
+	if(!fllw){
+		res.json({ success: false, message: 'Invalid User to follow'});
+	}else if(fllw){
+		User.update({ _id: userid }, { $push: { following: fllw } }, function(err, user){
+			if(err){
+				return(next(err));
+			}
+			res.json({succes: true, user: user});
+		});
+	}
+}
+
+module.exports.getposts = function(req, res, next){
+	var userid = req.param('userid');
+	User.findOne({_id: userid}, function(err, user){
+		if(err){
+			return next(err);
+		}
+		res.json({success: true, posts: user.posts});
+	});
+}
+
+// module.exports.getpostbyid = function(req, res, next){
+// 	var userid = req.param('userid');
+// 	var postid = req.param('postid');
+// 	User.findOne({_id: userid, posts._id: postid}, {_id: 0, posts: 1}. function(err, user){
+// 		if(err){
+// 			return next(err);
+// 		}
+// 		res.json({success: true, posts: user.posts});
+// 	});
+// }
