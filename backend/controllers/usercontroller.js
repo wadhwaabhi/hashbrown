@@ -87,13 +87,12 @@ module.exports.getposts = function(req, res, next){
 	});
 }
 
-// module.exports.getpostbyid = function(req, res, next){
-// 	var userid = req.param('userid');
-// 	var postid = req.param('postid');
-// 	User.findOne({_id: userid, posts._id: postid}, {_id: 0, posts: 1}. function(err, user){
-// 		if(err){
-// 			return next(err);
-// 		}
-// 		res.json({success: true, posts: user.posts});
-// 	});
-// }
+module.exports.getpostbyid = function(req, res, next){
+	var userid = req.param('userid');
+	var postid = req.param('postid');
+	var query = User.findOne({_id: userid}, {'posts': {$elemMatch: {'_id': postid}}});
+	query.exec(function (err, value) {
+        if (err) return next(err);
+        res.send({"post":value.posts});
+    });
+}
