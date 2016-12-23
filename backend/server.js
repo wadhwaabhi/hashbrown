@@ -8,6 +8,7 @@ var config = require('./config');
 
 var loginController = require('./controllers/logincontroller');
 var userController = require('./controllers/usercontroller');
+var postController = require('./controllers/postcontroller');
 
 var app = express()
 // var allowCrossDomain = function(req, res, next) {
@@ -68,10 +69,12 @@ apiRoutes.use(function(req, res, next){
 
 app.get('/api/user/info', userController.users);
 app.get('/api/user/feed', userController.feed);
-app.get('/api/user/posts', userController.getposts);
-app.get('/api/user/post', userController.getpostbyid);
-app.post('/api/user/post', userController.addnewpost);
 app.post('/api/user/follow', userController.follow);
+
+app.get('/api/user/posts', postController.getposts);
+app.get('/api/user/post', postController.getpostbyid);
+app.post('/api/user/post', postController.addnewpost);
+
 
 
 app.listen(3000, '0.0.0.0', function () {
