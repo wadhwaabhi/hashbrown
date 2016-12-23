@@ -70,6 +70,7 @@ app.get('/api/user/info', userController.users);
 app.get('/api/user/feed', userController.feed);
 app.get('/api/user/posts', userController.getposts);
 app.get('/api/user/post', userController.getpostbyid);
+app.post('/api/user/post', userController.addnewpost);
 app.post('/api/user/follow', userController.follow);
 
 

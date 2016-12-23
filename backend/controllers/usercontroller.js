@@ -96,3 +96,19 @@ module.exports.getpostbyid = function(req, res, next){
         res.send({"post":value.posts});
     });
 }
+
+module.exports.addnewpost = function(req, res, next){
+	var userid = req.param('userid');
+	var post = {
+		content: req.body.content,
+		image: req.body.image,
+		likes: 0,
+		comments:[]
+	}
+	User.update({_id: userid}, {$push:{posts: post}}, function(err, data){
+		if(err){
+			return next(err);
+		}
+		res.json({success: true, status: data});
+	});
+}
