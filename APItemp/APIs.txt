@@ -1,0 +1,15 @@
+1) LOGIN APIs:
+	a) Login: 			POST http://<domain>/login
+	b) Register: 		POST http://<domain>/register
+
+2) USER APIs:
+	a) User Info:		GET  http://<domain>/user/info
+	b) User Feed:		GET  http://<domain>/user/feed
+	c) User Follow: 	GET	 http://<domain>/user/follow
+
+3) POST APIs:
+	a) User Posts:		GET  http://<domain>/user/posts
+	b) Post by PostID:	GET  http://<domain>/user/post
+	c) New Post:		POST http://<domain>/user/post
+	d) Like Post:		POST http://<domain>/user/post/like
+	
