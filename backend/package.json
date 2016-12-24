@@ -6,6 +6,7 @@
     "jsonwebtoken": "^7.2.1",
     "jwt-simple": "^0.5.1",
     "mongoose": "^4.7.3",
-    "morgan": "^1.7.0"
+    "morgan": "^1.7.0",
+    "underscore": "^1.8.3"
   }
 }
