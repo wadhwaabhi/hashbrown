@@ -74,6 +74,7 @@ app.post('/api/user/follow', userController.follow);
 app.get('/api/user/posts', postController.getposts);
 app.get('/api/user/post', postController.getpostbyid);
 app.post('/api/user/post', postController.addnewpost);
+app.post('/api/user/post/like', postController.likepost);
 
 
 
